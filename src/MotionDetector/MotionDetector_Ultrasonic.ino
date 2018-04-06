@@ -1,11 +1,5 @@
-/*
-  Created 2017
-  by MadGyver (AlexGyver)
 
-   Wake up every second, get distance
-   If there is some obstacle, power on servo, turn it, remember time, sleep sequence again
-   If there is no obstacle and passed more than cap_time, power on servo and close the cap
-*/
+
 //-------------------- SETTINGS ----------------------
 #define maxH 50           // working distance
 #define cap_time 4        // time while cap is open, seconds
