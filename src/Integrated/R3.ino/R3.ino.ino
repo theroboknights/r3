@@ -20,6 +20,11 @@
  * echo pin to Analog pin A2
  * Servo pin to Analog pin A5
  * 
+ * Inductive Proximity sensor as Metal Detector
+ * 
+ * DS3231 as Real Time Clock (RTC) and also
+ * acts as a Temperature Sensor.
+ * 
  * LCD RS pin to digital pin 12
  * LCD Enable pin to digital pin 11
  * LCD D4 pin to digital pin 5
@@ -48,8 +53,9 @@
 */
 
 //-------------------- SETTINGS ----------------------
-#define maxH 50           // working distance
-#define cap_time 4        // time while cap is open, seconds
+#define maxH 15           // working distance. Initially it was 50cm and
+                          // 
+#define cap_time 4        // time while cap is open, 4 seconds
 #define open_angle 10     // open angle
 #define close_angle 155   // close angle
 
@@ -125,7 +131,7 @@ void setup() {
   pinMode(sensorVCC, OUTPUT);
   digitalWrite(sensorVCC, 0);     // power off the sensor
 
-  open_cap();                     // open cap with system start
+//  open_cap();                     // open cap with system start
 
 
   // Initialize the rtc object
@@ -223,7 +229,7 @@ void loop() {
         Serial.println(open_flag);
         Serial.println("&&&&&&&$$$$$$$$$$$$$$$$&&&&&&&&&&&");
        
-        if (distance > 1 && distance < maxH) { // if distance fit the range
+        if (distance >= 5 && distance <= maxH) { // if distance fit the range of 5cm to 15cm
         //  if (distance > 5) {
           Serial.println("testing.... IF...");
           open_timer = 0;                     // reset timer
@@ -258,7 +264,8 @@ void loop() {
 
 } //end of loop
 
-// distance measuring custom function
+// distance measuring custom function using pulseIn and below formula
+// (duration / 2) / 29.1 ---> OR (duration / 2) * 0.0344;
 byte measure() {
   digitalWrite(trigPin, 0);
   delayMicroseconds(5);
