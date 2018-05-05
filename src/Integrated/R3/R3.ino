@@ -142,7 +142,7 @@ void setup() {
   pinMode(sensorVCC, OUTPUT);
   digitalWrite(sensorVCC, 0);     // power off the sensor
 
-//  open_cap();                     // open cap with system start
+  //open_cap();                     // open cap with system start
 
 
   // Initialize the rtc object
@@ -215,18 +215,18 @@ void loop() {
         
         //if distance fit the range of 5cm to 15cm
         if (distance >= 5 && distance <= maxH) { 
-          Serial.println("testing.... IF...");
+         // Serial.println("testing.... IF...");
           open_timer = 0;                     //Reset timer
           if (!open_flag) {                   //If cap is closed
-            Serial.println("testing....inside IF -- !open_flag ...");
+           // Serial.println("testing....inside IF -- !open_flag ...");
             tone(piezoPin, 7000, 2500);       //Pin Number, Frequency in Hz, 
                                               //duration in milli seconds
             open_cap();
           }
         } else {
-          Serial.println("testing....ELSE...");
+          //Serial.println("testing....ELSE...");
           if (open_flag) {                    // if cap is open
-            Serial.println("testing....inside ELSE -- open_flag ...");
+          //  Serial.println("testing....inside ELSE -- open_flag ...");
             open_timer++;                     //Timer increments by 1 sec each time 
                                               // (open_timer = open_timer + 1)
             if (open_timer > cap_time) {      //if cap_time exceeds after cap was opened
@@ -252,7 +252,7 @@ void open_cap() {
   delay(1000);                    // wait servo
   digitalWrite(MOSFETpin, 0);     // disable servo - A6
   open_flag = true;                  // remember that cap is open
-  Serial.println("Cap Opened");
+  Serial.println("Cap Opened.");
 }
 void close_cap() {
   if (debug) Serial.println("close");
@@ -262,7 +262,7 @@ void close_cap() {
   delay(1000);                    // wait servo
   digitalWrite(MOSFETpin, 0);     // disable servo - A6
   open_flag = false;                  // remember that cap is closed
-  Serial.println("Cap Closed");
+  Serial.println("Cap Closed.");
 }
 
 
