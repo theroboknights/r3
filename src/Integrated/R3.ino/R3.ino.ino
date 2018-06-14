@@ -130,7 +130,7 @@ void setup() {
 
   pinMode(sensorVCC, OUTPUT);
   digitalWrite(sensorVCC, 0);     // power off the sensor
-
+ 
 //  open_cap();                     // open cap with system start
 
 

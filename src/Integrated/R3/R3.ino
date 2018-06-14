@@ -29,6 +29,10 @@
  * echo pin to Analog pin A2
  * 
  * Inductive Proximity sensor as Metal Detector Input Device.
+ * Inductive Proximity sensor as Metal Detector Input Device.
+ * Pulse signla to Analog pin A1
+ * Sensor Power signals from VCC (5 volts)
+ * Sensor Ground from GND pin
  * 
  * DS3231 as Real Time Clock (RTC) and also
  * acts as a Temperature Sensor Input Device.
