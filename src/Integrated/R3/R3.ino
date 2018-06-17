@@ -66,6 +66,10 @@
       Srinidhi Akella
       Harini Devireddy
       Pragna Yalamanchili
+
+ @Modified - 06/16/2018
+              Fixed Time lap issue between openCap and closeCap 
+              Fixed execution of openCap on setup/startup of R3
       
 */
 
@@ -131,8 +135,6 @@ void setup() {
 
  // set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
-  // Print a message to the LCD.
- // lcd.print("Please Recycle!");
   
   Serial.begin(9600); //serial.begin is used for both modules
   if (debug) Serial.println("system start");
@@ -154,8 +156,8 @@ void setup() {
   
   // The following lines can be uncommented to set the date and time
   //rtc.setDOW(SUNDAY);     // Set Day-of-Week to SUNDAY
- // rtc.setTime(4, 49, 0);     // Set the time to 12:00:00 (24hr format)
- // rtc.setDate(15, 4, 2018);   // Set the date to April 14TH, 2018 // 14, 4, 2018
+  //rtc.setTime(4, 49, 0);     // Set the time to 12:00:00 (24hr format)
+  //rtc.setDate(15, 4, 2018);   // Set the date to April 14TH, 2018 // 14, 4, 2018
   
   
 }
@@ -163,12 +165,13 @@ void setup() {
 //---- Loops consecutively, allowing R3 program to change and respond ----------
 void loop() {
 
+Serial.println("Loop_Started");
   displayTime();
 
   // Below IF is for Metal Detector and
   //ELSE is for Motion Detector
   monitoring= analogRead(monitorPin);
-  delay(1000);
+ // delay(1000);
   lcd.print("");
     
   if(monitoring < 250)
@@ -202,20 +205,21 @@ void loop() {
       
       // LowPower.powerDown(SLEEP_1S, ADC_OFF, BOD_OFF);  // sleep 1 second
       Serial.println("system in loop.....distance: " + distance);
-      delay(1000);//Instead of LowPower.powerDown(...) we used delay(1000) as LowPower.powerDown(...) function is giving error because of LowPower.h library
+     // delay(1000);//Instead of LowPower.powerDown(...) we used delay(1000) as LowPower.powerDown(...) function is giving error because of LowPower.h library
       
         digitalWrite(sensorVCC, 1);           // power up range sensor
         measure();                            // first "idle" measure, there are some glitches without it
         distance = measure();                 // get distance
         digitalWrite(sensorVCC, 0);           // disable range sensor
         if (debug) {
+          Serial.println("debug: "+ debug);
           Serial.println(distance);
           delay(500);
         }
         
-        Serial.println("&&&&&&& open_flag value is &&&&&&&&&&&");
-        Serial.println(open_flag);
-        Serial.println("&&&&&&&$$$$$$$$$$$$$$$$&&&&&&&&&&&");
+       // Serial.println("&&&&&&& open_flag value is &&&&&&&&&&&");
+       // Serial.println(open_flag);
+       // Serial.println("&&&&&&&$$$$$$$$$$$$$$$$&&&&&&&&&&&");
         
         //if distance fit the range of 5cm to 15cm
         if (distance >= 5 && distance <= maxH) { 
@@ -233,6 +237,8 @@ void loop() {
           //  Serial.println("testing....inside ELSE -- open_flag ...");
             open_timer++;                     //Timer increments by 1 sec each time 
                                               // (open_timer = open_timer + 1)
+            Serial.println(open_timer);
+            Serial.println(cap_time);
             if (open_timer > cap_time) {      //if cap_time exceeds after cap was opened
               close_cap();
             }
@@ -241,9 +247,9 @@ void loop() {
     
   }
   
-  Serial.println(var);
+  //Serial.println(var);
   var = var + 5; 
-  delay(1000);
+  //delay(1000);
 
 } //end of loop
 
@@ -307,7 +313,7 @@ byte displayTime(){
   //to display temperature
   displayTemp(); 
   // Wait one second before repeating :)
-  delay (1000);  
+  //delay (1000);  
 }
 
 //displays the Temperature inside the trashcan in Fahrenheit
@@ -318,5 +324,6 @@ byte displayTime(){
   lcd.print(tempF);
   lcd.print("F");
 }
+
 
 
