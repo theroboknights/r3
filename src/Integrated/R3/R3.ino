@@ -148,16 +148,16 @@ void setup() {
   pinMode(sensorVCC, OUTPUT);
   digitalWrite(sensorVCC, 0);     // power off the sensor
 
-  //open_cap();                     // open cap with system start
+  open_cap();                     // open cap with system start
 
 
   // Initialize the rtc object
   rtc.begin();
   
   // The following lines can be uncommented to set the date and time
-  //rtc.setDOW(SUNDAY);     // Set Day-of-Week to SUNDAY
-  //rtc.setTime(4, 49, 0);     // Set the time to 12:00:00 (24hr format)
-  //rtc.setDate(15, 4, 2018);   // Set the date to April 14TH, 2018 // 14, 4, 2018
+  rtc.setDOW(SUNDAY);     // Set Day-of-Week to SUNDAY
+  rtc.setTime(18, 51, 0);     // Set the time to 12:00:00 (24hr format)
+  rtc.setDate(17, 6, 2018);   // Set the date to April 14TH, 2018 // 14, 4, 2018
   
   
 }
@@ -171,7 +171,7 @@ Serial.println("Loop_Started");
   // Below IF is for Metal Detector and
   //ELSE is for Motion Detector
   monitoring= analogRead(monitorPin);
- // delay(1000);
+  delay(1000);
   lcd.print("");
     
   if(monitoring < 250)
@@ -217,8 +217,8 @@ Serial.println("Loop_Started");
           delay(500);
         }
         
-       // Serial.println("&&&&&&& open_flag value is &&&&&&&&&&&");
-       // Serial.println(open_flag);
+        Serial.println("&&&&&&& open_flag value is &&&&&&&&&&&");
+        Serial.println(open_flag);
        // Serial.println("&&&&&&&$$$$$$$$$$$$$$$$&&&&&&&&&&&");
         
         //if distance fit the range of 5cm to 15cm
@@ -324,6 +324,7 @@ byte displayTime(){
   lcd.print(tempF);
   lcd.print("F");
 }
+
 
 
 
